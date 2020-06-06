@@ -29,7 +29,7 @@ MediaPlayer.prototype.unmute = function () {
     this.media.muted = false;
 };
 
-MediaPlayer.prototype.tootgleMute = function () {
+MediaPlayer.prototype.toggleMute = function () {
     if (this.media.muted) {
         this.unmute();
     } else {
@@ -38,6 +38,18 @@ MediaPlayer.prototype.tootgleMute = function () {
 };
 
 MediaPlayer.prototype._initPlugins = function () {
+    const player = {
+        play: () => this.play(),
+        pause: () => this.pause(),
+        media: this.media,
+        get muted() {
+          return this.media.muted;
+        },
+        set muted(value) {
+          this.media.muted = value;
+        }
+    };
+
     this.plugins.forEach(plugin => {
         plugin.run(this);
     });
